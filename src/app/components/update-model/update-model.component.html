@@ -1,0 +1,91 @@
+<!-- Loading master icon starts -->
+<div class="loading-master-icon" *ngIf="showLoadingIcon">
+    <div class="loading-master-canvas">
+        <div>
+            Please wait!
+        </div>
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+  </div>
+  <!-- Loading master icon ends -->
+  
+  
+  
+  <!-- nav-bar start -->
+  <div class="nav-master">
+    <div class="nav-brand">
+        3D Models Manager
+    </div>
+    <div id="nav-back">
+      <a href="/">
+          <i class="fa fa-solid fa-arrow-left"></i>
+          Back to uploaded models
+      </a>
+    </div>
+  </div>
+  <hr class="nav-hr">
+  <!-- nav-bar ends -->
+  <div class="container">
+    <div class="title-master">
+      Update model - {{modelName}}
+    </div>
+    <form class="form" [formGroup]="updateModelForm" (ngSubmit)="onModelUpdateSubmit()">
+      <div class="form-group">
+        <div class="form-control-master">
+          <label>
+            <div class="input-master-model-file-label-div">
+              <i class="fa fa-solid fa-folder-open"></i>
+              Browse- Upload the 3D model file with extension .glp
+              <div *ngIf="attachedFile != ''">
+                Selected file:
+                <i>
+                  {{attachedFile}}
+                </i>
+              </div>
+              <input type="file" class="input-master-model-file" 
+              formControlName="modelFile" 
+              (change)="onModelFileChanged($event)" accept="{{supportedModels}}">
+            </div>
+          </label>
+          <div class="validation-master" *ngIf="updateModelForm.controls['modelFile'].touched && 
+          updateModelForm.controls['modelFile'].errors?.['required'] && 
+          updateModelForm.controls['modelName'].errors?.['required']">
+            <div *ngIf="updateModelForm.controls['modelFile'].errors?.['required']">
+              Model is required, atleast one value is required out of model file and model name.
+            </div>
+          </div>
+        </div>
+        <div class="form-control-master">
+          <label>
+            Rename
+          </label>
+          <div>
+            <input type="text" class="input-master" formControlName=modelName 
+            (change)="modelNameChanged($event)">
+          </div>
+        </div>
+        <div class="validation-master" *ngIf="updateModelForm.controls['modelName'].touched && 
+        updateModelForm.controls['modelFile'].errors?.['required'] && 
+        updateModelForm.controls['modelName'].errors?.['required']">
+          <div *ngIf="updateModelForm.controls['modelName'].errors?.['required']">
+            Model name is required, atleast one value is required out of model and model name to update.
+          </div>
+          <div *ngIf="updateModelForm.controls['modelName'].errors?.['minlength']">
+            Model name requires atleast 3 characters.
+          </div>
+        </div>
+        <div class="form-control-master">
+          <button type="submit" class="btn-master btn-master-default" [disabled]="updateModelForm.controls['modelFile'].errors?.['required'] && 
+          updateModelForm.controls['modelName'].errors?.['required']">
+            <i class="fa fa-solid fa-upload"></i>
+            Upload and update
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>

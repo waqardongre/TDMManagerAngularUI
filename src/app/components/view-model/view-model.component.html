@@ -1,0 +1,62 @@
+<!-- Loading master icon starts -->
+<div class="loading-master-icon" *ngIf="showLoadingIcon">
+    <div class="loading-master-canvas">
+        <div>
+            Please wait!
+        </div>
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+<!-- Loading master icon ends -->
+
+<div id="modelRenderingDiv">
+    <div id="hover-div">
+        <div id="nav-view-model">
+            <div class="nav-brand">
+                3D Models Manager
+            </div>
+            <div id="nav-back">
+                <a href="/modelslist">
+                    <i class="fa fa-solid fa-arrow-left"></i>
+                    Back to uploaded models
+                </a>
+            </div>
+        </div>
+        <div id="info">
+            Drag to move - Scroll/Pinch to zoom - Drag with [two fingers] or [right mouse button click] to move the camera
+        </div>
+        <div id="lights-div">
+            <div id="lights">
+                <div id="lights-main-label">
+                    Lights
+                </div>
+                <div class="light">
+                    <label class="light-labels">Ambient</label>
+                    <div class="switch-master">
+                        <input type="radio" [checked]="ambientLightSwitch">
+                        <span class="slider-master round" (click)="switchAmbientLight()"></span>
+                    </div>
+                </div>
+                <div class="light">
+                    <label class="light-labels">Directional 1</label>
+                    <div class="switch-master">
+                        <input type="radio" [checked]=directionalLightSwitch>
+                        <span class="slider-master round" (click)="switchDirectionalLight()"></span>
+                    </div>
+                </div>
+                <div class="light">
+                    <label class="light-labels">Directional 2</label>
+                    <div class="switch-master">
+                        <input type="radio" [checked]=directionalLightSwitchTwo>
+                        <span class="slider-master round" (click)="switchDirectionalLightTwo()"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

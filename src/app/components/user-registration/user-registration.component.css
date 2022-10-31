@@ -1,0 +1,22 @@
+.user-info {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+}
+.user-info-item {
+    padding-left: 0.7vw;
+    padding-right: 0.7vw;
+}
+
+.otp-btn {
+    margin-top: 0.7vmin;
+    margin-bottom: 0.7vmin;
+}
+
+.btn-master {
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+}

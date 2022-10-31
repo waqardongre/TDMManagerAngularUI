@@ -1,0 +1,150 @@
+<!-- Loading master icon starts -->
+<div class="loading-master-icon" *ngIf="showLoadingIcon">
+  <div class="loading-master-canvas">
+    <div>
+      Please wait!
+    </div>
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+<!-- Loading master icon ends -->
+
+<!-- Delete div starts-->
+<div class="delete-master-div" *ngIf="showDeleteDiv">
+  <div class="delete-master-canvas">
+    <div class="delete-master-text">
+      Are sure you want to delete?
+    </div>
+    <div class="delete-master-buttons-div">
+      <button class="delete-master-button btn-master btn-master-danger" (click)="deleteBtnYes()">
+        Yes please
+      </button>
+      <button class="delete-master-button btn-master btn-master-success" (click)="deleteBtnNo()">
+        Never mind
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Delete div ends-->
+
+
+
+<!-- nav-bar start -->
+<div class="nav-master">
+  <div class="nav-brand">
+    3D Models Manager
+  </div>
+  <div class="user-info">
+    <div class="user-profile-master">
+      <i class="fa fa-solid fa-user user-profile-icon-master"></i>
+      {{email}}
+    </div>
+    <div *ngIf="!loggedIn">
+      <div class="user-info-item">
+        <a href="/">
+          Login
+        </a>
+      </div>
+      <div class="user-info-item">
+        <a href="/register">
+          Register
+        </a>
+      </div>
+    </div>
+    <div class="user-info-item">
+      <a href="/" (click)="userLogout()">
+        Logout
+      </a>
+    </div>
+  </div>
+</div>
+<hr class="nav-hr">
+<!-- nav-bar ends -->
+<div class="container">
+  <div>
+    <div class="title-master">
+      Upload model
+    </div>
+    <form class="form" [formGroup]="uploadModelForm" (ngSubmit)="onModelSubmit()">
+      <div class="form-group">
+        <div class="form-control-master">
+          <label>
+            <div class="input-master-model-file-label-div">
+              <i class="fa fa-solid fa-folder-open"></i>
+              Browse- Select 3D model file(s) with extension .glp 
+              <div *ngIf="attachedModelDTOObjList.length > 0">
+                Attached files:
+                <i *ngFor="let modelObj of attachedModelDTOObjList;let indexOfelement=index;">
+                  {{indexOfelement+1}}.{{modelObj.name}}
+                </i>
+              </div>
+              <input type="file" multiple class="input-master-model-file" formControlName="modelFile"
+                (change)="onModelFileChanged($event)" accept="{{supportedModels}}">
+            </div>
+          </label>
+        </div>
+        <div class="validation-master" *ngIf="uploadModelForm.controls['modelFile'].touched">
+          <div *ngIf="uploadModelForm.controls['modelFile'].errors?.['required']">
+            Model file(s) is required.
+          </div>
+        </div>
+        <div class="form-control-master">
+          <button type="submit" class="btn-master btn-master-default">
+            <i class="fa fa-solid fa-upload"></i>
+            Upload
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <hr>
+  <div>
+    <div class="title-master">
+      Uploaded 3D model(s)
+    </div>
+    <div class="list-master-group">
+      <div class="list-master" *ngIf="modelsList.length == 0">
+        <div class="">
+          <div class="list-master-item-label" *ngIf="modelsList.length === 0">
+            No 3D model(s) are uploaded! Please upload some.
+          </div>
+        </div>
+      </div>
+      <div class="list-master" *ngIf="modelsList.length > 0">
+        <div class="list-master-item" *ngFor="let modelObj of modelsList;">
+          <div class="list-master-item-label">
+            {{modelObj.modelName}}
+          </div>
+          <div class="list-master-item-label">
+            By: {{modelObj.email}}
+          </div>
+          <div class="list-master-btn-div">
+            <div>
+              <button class="btn-master btn-model-list btn-master-default" (click)="routeToViewModel(modelObj)">
+                <i class="fa fa-solid fa-eye"></i>
+                View
+              </button>
+            </div>
+            <div>
+              <button class="btn-master btn-model-list btn-master-default" (click)="routeToUpdateModel(modelObj)">
+                <i class="fa fa-solid fa-pen"></i>
+                Edit
+              </button>
+            </div>
+            <div>
+              <button class="btn-master btn-model-list btn-master-default" (click)="deleteModel(modelObj.modelId)">
+                <i class="fa fa-solid fa-trash"></i>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

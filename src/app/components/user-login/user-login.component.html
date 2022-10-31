@@ -1,0 +1,88 @@
+<!-- Loading master icon starts -->
+<div class="loading-master-icon" *ngIf="showLoadingIcon">
+  <div class="loading-master-canvas">
+    <div>
+      Please wait!
+    </div>
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+<!-- Loading master icon ends -->
+
+
+
+<!-- nav-bar start -->
+<div class="nav-master">
+  <div class="nav-brand">
+    3D Models Manager
+  </div>
+  <div class="user-info">
+    <div class="user-info-item">
+      <a href="/register">
+        Register
+      </a>
+    </div>
+  </div>
+</div>
+<hr class="nav-hr">
+<!-- nav-bar ends -->
+
+
+
+<div class="container">
+  <div class="title-master">
+    Login User
+  </div>
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
+    <div class="form-group">
+      <div class="error-msg-master" *ngIf="errorOccured">
+        {{errorMsg}}
+      </div>
+      <div class="form-control-master">
+        <label class="label-master">
+          Email
+        </label>
+        <div>
+          <input type="email" class="input-master" 
+          formControlName="email">
+          <div class="validation-master" *ngIf="loginForm.controls['email'].touched && 
+            loginForm.controls['email'].errors?.['required']">
+            <div *ngIf="loginForm.controls['email'].errors?.['required']">
+              Email is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-control-master">
+        <label class="label-master">
+          Password
+        </label>
+        <div>
+          <input type="password" class="input-master" 
+          formControlName="password">
+          <div class="validation-master" *ngIf="loginForm.controls['password'].touched && 
+            loginForm.controls['password'].errors?.['required']">
+            <div *ngIf="loginForm.controls['password'].errors?.['required']">
+              Password is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-control-master">
+        <button type="submit" class="btn-master btn-master-default" 
+        [disabled]="loginForm.controls['email'].errors?.['required'] && 
+        loginForm.controls['password'].errors?.['required']">
+          Login
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>

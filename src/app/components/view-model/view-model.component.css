@@ -1,0 +1,63 @@
+#modelRenderingDiv {
+    font-size: small;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+  
+  #hover-div {
+    pointer-events: none;
+    position: absolute;
+    align-items: center;
+  }
+  
+  #nav-view-model {
+    display: flex;
+    align-items: center;
+    font-size: x-large;
+    padding: 1vmin;
+    padding-left: 1.5vmin;
+  }
+  #nav-back {
+    pointer-events: all;
+    padding-left: 3vmin;
+    font-size: small;
+  }
+  
+  #info {
+    width: 100vw;
+    font-size: smaller;
+    display: flex;
+    justify-content: center;
+    padding: 2vmin;
+    padding-top: 0;
+  }
+  
+  #lights-div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    text-align: -webkit-right;
+    font-size: small;
+  }
+  
+  #lights {
+    padding: 2vmin;
+  }
+  
+  .light {
+    padding-top: 0.3vmin;
+  }
+  
+  .light-labels {
+    display: block;
+    text-align: left;
+  }
+  
+  #lights-main-label {
+    display: block;
+    text-align: left;
+    padding-bottom: 2vmin;
+  }
