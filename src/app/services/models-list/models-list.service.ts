@@ -17,28 +17,25 @@ export class ModelsListService {
     this.modelCurrent = this.modelCurrentSubject.asObservable();
   }
   
-  getModelsList(requestHeaderOptions: any, userId: string): Observable<any> {
+  getModelsList(userId: string): Observable<any> {
     return this.httpClient
     .get<any> (
       DOTNETCOREAPI + 'api/tdmodels?userId=' + userId,
-      requestHeaderOptions
     );
   }
 
-  modelUpload(requestHeaderOptions: any, formData: FormData):Observable<any> {
+  modelUpload(formData: FormData):Observable<any> {
     return this.httpClient
     .post<any> (
       DOTNETCOREAPI + 'api/tdmodels',
-      formData,
-      requestHeaderOptions
+      formData
     );
   }
 
-  deleteModel(requestHeaderOptions: any, modelId: number):Observable<any> {
+  deleteModel(modelId: number):Observable<any> {
     return this.httpClient
     .delete<any> (
-      DOTNETCOREAPI + 'api/tdmodels/' + modelId,
-      requestHeaderOptions
+      DOTNETCOREAPI + 'api/tdmodels/' + modelId
     );
   }
 

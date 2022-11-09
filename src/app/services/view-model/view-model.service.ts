@@ -10,13 +10,13 @@ export class ViewModelService {
 
   constructor(
     private httpClient: HttpClient
-  ) {}
+  ) 
+  {}
 
-  getModel(requestHeaderOptions: any, modelId: number): Observable<any> {
+  getModel(modelId: number): Observable<any> {
     return this.httpClient
     .get<any> (
-      DOTNETCOREAPI+ 'api/tdmodels/'+ modelId,
-      requestHeaderOptions
+      DOTNETCOREAPI+ 'api/tdmodels/'+ modelId
     )
   }
 }

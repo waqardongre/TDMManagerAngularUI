@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModelsListService } from 'src/app/services/models-list/models-list.service';
-import { TokenServiceService } from 'src/app/services/token-service/token-service.service';
 import { UpdateModelService } from 'src/app/services/update-model/update-model.service';
 
 @Component({
@@ -18,18 +17,15 @@ export class UpdateModelComponent implements OnInit {
   protected updateModelForm: FormGroup = this.initModelForm();
   protected showLoadingIcon: boolean = true;
   protected supportedModels: string = ".glb";
-  private requestHeaderOptions: any;
-
+  
   constructor (
     private modelsListService: ModelsListService,
     private updateModelService: UpdateModelService,
     private router: Router,
-    private tokenService: TokenServiceService
   )
   {}
 
   ngOnInit() {
-    this.requestHeaderOptions = this.tokenService.getTokenRequestHeaderOptions();
     this.modelsListService.modelCurrent.subscribe((modelObj) => {
       this.modelId = modelObj.modelId;
       this.modelName = modelObj.modelName;
@@ -92,7 +88,7 @@ export class UpdateModelComponent implements OnInit {
 
     this.updateModelForm = this.initModelForm();
 
-    this.updateModelService.modelUpdate(this.requestHeaderOptions, this.modelId, formData)
+    this.updateModelService.modelUpdate(this.modelId, formData)
     .subscribe({
       next: response => {
         this.showLoadingIcon = false;

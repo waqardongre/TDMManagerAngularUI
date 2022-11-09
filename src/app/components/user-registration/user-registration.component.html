@@ -70,6 +70,9 @@
               </div>
             </div>
           </div>
+          <div class="error-msg-master" *ngIf="userNameError">
+            {{userNameMsg}}
+          </div>
         </div>
   
         <div class="form-control-master">
@@ -78,12 +81,15 @@
           </label>
           <div>
             <input type="email" class="input-master" 
-            formControlName="email">
+            formControlName="email" [readonly]="OTPSent">
             <div class="validation-master" *ngIf="registerForm.controls['email'].touched && 
             registerForm.controls['email'].errors?.['required']">
               <div *ngIf="registerForm.controls['email'].errors?.['required']">
                 Email is required
               </div>
+            </div>
+            <div class="info-msg-master" *ngIf="!OTPSent">
+              Once OTP sent you can't change the email unless refreshing the page. 
             </div>
           </div>
           <div class="otp-btn" *ngIf="!OTPSent">
@@ -126,9 +132,9 @@
           <div>
             <input type="password" class="input-master" 
             formControlName="password">
-            <div class="validation-master" *ngIf="registerForm.controls['userName'].touched && 
-            registerForm.controls['userName'].errors?.['required']">
-              <div *ngIf="registerForm.controls['userName'].errors?.['required']">
+            <div class="validation-master" *ngIf="registerForm.controls['password'].touched && 
+            registerForm.controls['password'].errors?.['required']">
+              <div *ngIf="registerForm.controls['password'].errors?.['required']">
                 Password is required
               </div>
             </div>

@@ -1,4 +1,4 @@
-# TDM
+# 3D Models Manager
 
 Backend- Asp.Net Core Web API git rep.: https://github.com/waqardongre/TDMManagerAsp.NetCoreWebAPI.git
 

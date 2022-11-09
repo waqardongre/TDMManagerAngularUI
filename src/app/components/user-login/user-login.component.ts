@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TokenServiceService } from 'src/app/services/token-service/token-service.service';
+import { JwtTokenService } from 'src/app/services/jwt-token/jwt-token.service';
 import { UserLoginService } from 'src/app/services/user-login/user-login.service';
 
 @Component({
@@ -21,16 +21,11 @@ export class UserLoginComponent implements OnInit {
   constructor(
     private userLoginService: UserLoginService,
     private router: Router,
-    private tokenService: TokenServiceService
-  ) { }
+    private jwtTokenService: JwtTokenService
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.initModelForm();
-    const JWTToken = localStorage.getItem("JWTToken");
-    if (JWTToken != null) {
-      this.routeToModelsList();
-      this.showLoadingIcon = true;
-    }
     this.showLoadingIcon = false;
   }
 
@@ -58,13 +53,13 @@ export class UserLoginComponent implements OnInit {
     this.userLoginService.loginUser(formData)
     .subscribe({
       next: response => {
-        const JWTToken = response;
-        this.tokenService.setToken(JWTToken);
+        const loginTokenDetails = response;
+        this.jwtTokenService.setJWTToken(loginTokenDetails);
         this.showLoadingIcon = false;
         this.routeToModelsList();
         console.log("Login successfully!");
       },
-      error: err =>{
+      error: err => {
         if (err.status == 400) {
           this.showLoadingIcon = false;
           this.errorOccured = true;

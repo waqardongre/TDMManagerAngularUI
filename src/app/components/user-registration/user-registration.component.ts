@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TokenServiceService } from 'src/app/services/token-service/token-service.service';
+import { JwtTokenService } from 'src/app/services/jwt-token/jwt-token.service';
 import { UserRegisterService } from 'src/app/services/user-register/user-register.service';
+import { EmailService } from 'src/app/services/email/email.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -11,23 +12,28 @@ import { UserRegisterService } from 'src/app/services/user-register/user-registe
 })
 export class UserRegistrationComponent implements OnInit {
   protected registerForm: FormGroup = this.initModelForm();
-  private displayName="";
-  private userName="";
-  private email="";
-  private password="";
+  private displayName='';
+  private userName='';
+  private email='';
+  private password='';
   protected OTPSent: boolean=false;
   protected emailConfirmed: boolean=false;
-  protected OTPErrorMsg: string="";
+  protected OTPErrorMsg: string='';
   protected OTPError: boolean=false;
+  protected OTPInput: string='';
   protected sendEmailError: boolean=false;
-  protected sendEmailMsg: string="";
+  protected sendEmailMsg: string='';
 
-  showLoadingIcon: boolean = true;
+  protected showLoadingIcon: boolean = true;
+  private OTP: string = '';
+  protected userNameMsg: string = '';
+  protected userNameError: boolean = false;
   
-  constructor(
+  constructor (
     private userRegisterService: UserRegisterService,
+    private emailService: EmailService,
     private router: Router,
-    private tokenService: TokenServiceService
+    private jwtTokenService: JwtTokenService
   ) { }
 
   ngOnInit() {
@@ -63,21 +69,26 @@ export class UserRegistrationComponent implements OnInit {
   sendOTPEmail(): void {
     const formData = new FormData();
     const email = this.registerForm.value['email']
-    const toEmailPropetName = "toEmail";
+    const toEmailPropetName = 'toEmail';
     formData.append(toEmailPropetName, email);
-
+    
     this.showLoadingIcon = true;
-    this.userRegisterService.sendOTPEmail(formData)
+    this.emailService.sendOTPEmail(formData)
     .subscribe({
       next: response => {
-        this.OTPSent = response;
-        this.sendEmailError = false;
+        this.OTP = response;
+        this.OTPSent = true;
         this.showLoadingIcon = false;
       },
       error: err => {
         if (err.error == 'emailexists'){
           this.sendEmailError = true;
-          this.sendEmailMsg = "A profile with this email already exists, try another email";
+          this.sendEmailMsg = 'A profile with this email already exists, try another email';
+          this.showLoadingIcon = false;
+        }
+        else {
+          this.sendEmailError = true;
+          this.sendEmailMsg = 'Error while sending confirmation OTP email, check your internet connectivity!';
           this.showLoadingIcon = false;
         }
       }
@@ -85,35 +96,46 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   onRegisterFormSubmit(): void {
-    const formData = new FormData();
-    for (const key of Object.keys(this.registerForm.value)) {
-      const value = this.registerForm.value[key];
-      formData.append(key, value);
-    }
-    const isNotAdminPropertyName = "isNotAdmin";
-    formData.append(isNotAdminPropertyName, "false");
-
-    this.showLoadingIcon = true;
-    this.userRegisterService.registerUser(formData)
-    .subscribe({
-      next: response => {
-        const JWTToken = response;
-        this.tokenService.setToken(JWTToken);
-        this.OTPError = false;
-        this.showLoadingIcon = false;
-        this.routeToModelsList();
-        console.log("Registered successfully!");
-      },
-      error: err => {
-        console.log(err.error);
-        this.showLoadingIcon = false;
-        this.OTPError = true;
-        this.OTPErrorMsg = "Your entered OTP doesn't match from the one sent to your email!"
+    this.OTPInput = this.registerForm.value['OTP'];
+    if (this.OTPInput == this.OTP) {
+      const formData = new FormData();
+      for (const key of Object.keys(this.registerForm.value)) {
+        const value = this.registerForm.value[key];
+        formData.append(key, value);
       }
-    });
+      const isNotAdminPropertyName = 'isNotAdmin';
+      formData.append(isNotAdminPropertyName, 'false');
+  
+      this.showLoadingIcon = true;
+      this.userRegisterService.registerUser(formData)
+      .subscribe({
+        next: response => {
+          const loginTokenDetails = response;
+          this.jwtTokenService.setJWTToken(loginTokenDetails);
+          this.OTPError = false;
+          console.log('Registered successfully!');
+          this.showLoadingIcon = false;
+          this.routeToModelsList();
+        },
+        error: err => {
+          if (err.error.text == 'usernameexists') {
+            this.userNameError = true;
+            this.userNameMsg = 'A profile with this username already exists, try another username';
+            this.showLoadingIcon = false;
+          }
+          console.log(JSON.stringify(err.error));
+          this.showLoadingIcon = false;
+        }
+      });
+    }
+    else {
+      this.showLoadingIcon = false;
+      this.OTPError = true;
+      this.OTPErrorMsg = 'Your entered OTP doesn\'t match from the one sent to your email!';    
+    }
   }
 
   routeToModelsList(): void {
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl('/modelslist')
   }
 }

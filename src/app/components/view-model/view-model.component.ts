@@ -4,7 +4,7 @@ import { ViewModelService } from 'src/app/services/view-model/view-model.service
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { TokenServiceService } from 'src/app/services/token-service/token-service.service';
+import { JwtTokenService } from 'src/app/services/jwt-token/jwt-token.service';
 
 @Component({
   selector: 'app-view-model',
@@ -13,7 +13,6 @@ import { TokenServiceService } from 'src/app/services/token-service/token-servic
 })
 export class ViewModelComponent implements OnInit {
 
-  private requestHeaderOptions: any;
   private modelId: any;
   private camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 10000 );;
   private scene: THREE.Scene = new THREE.Scene();
@@ -33,8 +32,7 @@ export class ViewModelComponent implements OnInit {
 
   constructor(
     private modelsListService: ModelsListService,
-    private viewmodelservice: ViewModelService,
-    private tokenService: TokenServiceService
+    private viewmodelservice: ViewModelService
   ) {
     this.modelsListService.modelCurrent.subscribe((modelObj) => {
       this.modelId = modelObj.modelId;
@@ -42,14 +40,13 @@ export class ViewModelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.requestHeaderOptions = this.tokenService.getTokenRequestHeaderOptions();
     this.modelRenderingDiv = document.getElementById('modelRenderingDiv');
     this.initThree(this.modelId);
   }
 
   initThree(modelId: number): void {
     // Getting 3D model from service method getModel
-    this.viewmodelservice.getModel(this.requestHeaderOptions, modelId)
+    this.viewmodelservice.getModel(modelId)
     .subscribe({
       next: (request) => {
         const modelBase64 = request.model;

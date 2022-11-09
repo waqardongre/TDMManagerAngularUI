@@ -6,17 +6,17 @@ import { DOTNETCOREAPI } from 'src/app/app.component';
 @Injectable({
   providedIn: 'root'
 })
-export class UpdateModelService {
+export class EmailService {
 
   constructor(
     private httpClient: HttpClient
   )
-  {}
+  { }
 
-  modelUpdate(modelId: number, formData: FormData):Observable<any> {
+  sendOTPEmail(formData: FormData):Observable<any> {
     return this.httpClient
-    .put (
-      DOTNETCOREAPI + 'api/tdmodels/' + modelId,
+    .post (
+      DOTNETCOREAPI + 'api/email',
       formData
     );
   }

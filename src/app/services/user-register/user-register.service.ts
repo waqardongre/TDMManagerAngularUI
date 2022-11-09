@@ -20,13 +20,5 @@ export class UserRegisterService {
       formData
     );
   }
-
-  sendOTPEmail(formData: FormData):Observable<any> {
-    return this.httpClient
-    .post (
-      DOTNETCOREAPI + 'api/token/sendotpemail',
-      formData
-    );
-  }
-  
+    
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModelsListService } from 'src/app/services/models-list/models-list.service';
-import { TokenServiceService } from 'src/app/services/token-service/token-service.service';
+import { JwtTokenService } from 'src/app/services/jwt-token/jwt-token.service';
 
 @Component({
   selector: 'app-models-list',
@@ -11,7 +11,6 @@ import { TokenServiceService } from 'src/app/services/token-service/token-servic
 })
 export class ModelsListComponent implements OnInit {
   
-  private requestHeaderOptions: any;
   protected supportedModels: string;
   protected showLoadingIcon: boolean = true;
   protected modelsList: any[] = [];
@@ -20,33 +19,37 @@ export class ModelsListComponent implements OnInit {
   private validationMessage: string = "";
   private tDModelName: string = "";
   private isModelValid: boolean = false;
-  private uploadModelResponse: any;
   
   private deleteModelId: number = -1;
-  private JWTToken: string = "";
+  private jwtToken: string = "";
   protected email: string = "";
   protected loggedIn: boolean = false;
   private userId: string = "";
   protected attachedModelDTOObjList: any = Array();
+  protected count$: any;
 
   constructor (
     private modelsListService: ModelsListService,
     private router: Router,
-    private tokenService: TokenServiceService
+    private jwttokenservice: JwtTokenService
   ) {
     this.supportedModels = ".glb";
   }
 
   ngOnInit(): void {
-    const tokenDetailsDict: any = this.tokenService.getTokenDetails();
-    const JWTToken = tokenDetailsDict.JWTToken;
+    const tokenDetailsDict: any = this.jwttokenservice.getJWTTokenDetails();
+    const jwtToken = tokenDetailsDict.jwtToken;
     this.email = tokenDetailsDict.email;
     this.uploadModelForm = this.initModelForm();
     this.userId = tokenDetailsDict.userId;
-    this.JWTToken = JWTToken == null ? "" : JWTToken;
-    this.loggedIn = JWTToken != "" ? true : false;
-    this.requestHeaderOptions = this.tokenService.getTokenRequestHeaderOptions();
-    this.getModelsList();
+    this.loggedIn = jwtToken == "" ? false : true;
+    if (this.loggedIn) {
+      this.getModelsList();
+    }
+    else {
+      this.showLoadingIcon = false;
+      this.router.navigateByUrl("/");
+    }
   }
   
   initModelForm(): FormGroup {
@@ -64,7 +67,7 @@ export class ModelsListComponent implements OnInit {
 
   getModelsList(): void {
     this.showLoadingIcon = true;
-    this.modelsListService.getModelsList(this.requestHeaderOptions, this.userId)
+    this.modelsListService.getModelsList(this.userId)
     .subscribe({
       next: response => {
         this.showLoadingIcon = false;
@@ -84,17 +87,9 @@ export class ModelsListComponent implements OnInit {
         }
       },
       error: err => {
-        console.log(err.error);
-        //If JWT expired clearing localStorage and routing to login page
-        if (err.status == 401) { 
-          localStorage.clear();
-          this.router.navigateByUrl("/")
-        }
-        else {
-          console.log('Error: ', err)
-        }
+        console.log('Error in getModelsList(): ', err.message);
       }
-    })
+    });
   }
 
   routeToViewModel(modelObj: string): void {
@@ -148,7 +143,7 @@ export class ModelsListComponent implements OnInit {
         const _email: string = this.email == undefined ? "" : this.email;
         formData.append(emailPropertyName, _email);
         
-        this.modelsListService.modelUpload(this.requestHeaderOptions, formData)
+        this.modelsListService.modelUpload(formData)
         .subscribe({
           next: (response) => {
             uploadCount += 1;
@@ -183,7 +178,7 @@ export class ModelsListComponent implements OnInit {
   deleteBtnYes(): void {
     this.showDeleteDiv = false;
     this.showLoadingIcon = true;
-    this.modelsListService.deleteModel(this.requestHeaderOptions, this.deleteModelId)
+    this.modelsListService.deleteModel(this.deleteModelId)
     .subscribe({
       next: response => {
         this.showLoadingIcon = false;
@@ -204,8 +199,7 @@ export class ModelsListComponent implements OnInit {
 
   userLogout(): void {
     this.showLoadingIcon = true;
-    this.loggedIn = false;
     localStorage.clear();
-    this.router.navigateByUrl("/login");
   }
+
 }
