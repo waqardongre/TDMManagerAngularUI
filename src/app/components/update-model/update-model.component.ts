@@ -103,6 +103,6 @@ export class UpdateModelComponent implements OnInit {
   }
 
   routeToModelsList(): void {
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl("/modelslist")
   }
 }
