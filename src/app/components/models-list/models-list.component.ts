@@ -151,6 +151,7 @@ export class ModelsListComponent implements OnInit {
             this.uploadCount += 1;
             if (this.uploadCount == this.attachedModelsLength) {
               this.attachedModelDTOObjList = Array();
+              this.attachedModelsLength = 0;
               this.showLoadingIcon = false;
               console.log('Your 3D model(s) uploaded successfully!');
               this.getModelsList();
