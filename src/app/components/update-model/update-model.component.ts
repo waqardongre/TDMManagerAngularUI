@@ -91,6 +91,7 @@ export class UpdateModelComponent implements OnInit {
     this.updateModelService.modelUpdate(this.modelId, formData)
     .subscribe({
       next: response => {
+        this.attachedFile = "";
         this.showLoadingIcon = false;
         console.log("Updated successfully!");
         this.routeToModelsList();

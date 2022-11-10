@@ -27,6 +27,8 @@ export class ModelsListComponent implements OnInit {
   private userId: string = "";
   protected attachedModelDTOObjList: any = Array();
   protected count$: any;
+  protected attachedModelsLength: number = 0;
+  protected uploadCount: number = 0;
 
   constructor (
     private modelsListService: ModelsListService,
@@ -132,9 +134,9 @@ export class ModelsListComponent implements OnInit {
       const modelPropertyName = 'modelIFormFile';
       const userIdPropertyName = 'userId';
       const emailPropertyName = 'email';
-      const modelsLength = modelIFormFileList.length;
-      let uploadCount = 0
-      for (let index = 0; index < modelsLength; index++) {
+      this.attachedModelsLength = modelIFormFileList.length;
+      this.uploadCount = 0
+      for (let index = 0; index < this.attachedModelsLength; index++) {
         const modelIFF: any = modelIFormFileList[index];
         const formData = new FormData();
         formData.append(modelPropertyName, modelIFF);
@@ -146,8 +148,9 @@ export class ModelsListComponent implements OnInit {
         this.modelsListService.modelUpload(formData)
         .subscribe({
           next: (response) => {
-            uploadCount += 1;
-            if (uploadCount == modelsLength) {
+            this.uploadCount += 1;
+            if (this.uploadCount == this.attachedModelsLength) {
+              this.attachedModelDTOObjList = Array();
               this.showLoadingIcon = false;
               console.log('Your 3D model(s) uploaded successfully!');
               this.getModelsList();
