@@ -129,7 +129,7 @@ input:checked + .slider-master:before {
     border-style: solid;
     border-color: #c7d1ce;
     border-radius: 0.9vmin;
-    padding: 0.5vmin;
+    padding: 1.1vmin;
     background-color: #ffffff;
 }
 
