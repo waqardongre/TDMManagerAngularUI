@@ -28,7 +28,7 @@
   
   #info {
     width: 100vw;
-    font-size: smaller;
+    font-size: small;
     display: flex;
     justify-content: center;
     padding: 2vmin;
