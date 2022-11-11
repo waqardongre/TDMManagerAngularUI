@@ -76,6 +76,7 @@ export class UserRegistrationComponent implements OnInit {
     this.emailService.sendOTPEmail(formData)
     .subscribe({
       next: response => {
+        this.sendEmailMsg = '';
         this.OTP = response;
         this.OTPSent = true;
         this.showLoadingIcon = false;

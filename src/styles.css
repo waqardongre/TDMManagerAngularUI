@@ -193,8 +193,6 @@ hr {
 
 .validation-master {
     color: #ff4500 !important;
-    margin-left: 0.7vmin;
-    margin-right: 0.7vmin;
 }
 
 .title-master {
@@ -331,7 +329,6 @@ hr {
 /* delete div ends */
 
 .error-msg-master {
-    padding: 0.7vmin;
     color: #ff3333;
 }
 
