@@ -348,3 +348,13 @@ hr {
     margin-left: 0;
     margin-right: 0;
 }
+
+.user-info-master {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+    font-size: smaller;
+}

@@ -4,15 +4,6 @@
     margin-right: 0.35vw;
 }
 
-.user-info {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    flex-grow: 1;
-    font-size: smaller;
-}
 .user-info-item {
     padding-left: 0.7vw;
     padding-right: 0.7vw;
