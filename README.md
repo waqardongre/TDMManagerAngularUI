@@ -1,6 +1,7 @@
 # 3D Models Manager
 
-Backend- Asp.Net Core Web API git rep.: https://github.com/waqardongre/TDMManagerAsp.NetCoreWebAPI.git
+All details, live links and backend - Asp.Net Core Web API source code is given on this git rep.: 
+https://github.com/waqardongre/TDMManagerAsp.NetCoreWebAPI.git
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.7.
 

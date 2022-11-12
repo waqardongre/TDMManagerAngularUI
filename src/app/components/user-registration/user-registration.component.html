@@ -1,157 +1,151 @@
 <!-- Loading master icon starts -->
 <div class="loading-master-icon" *ngIf="showLoadingIcon">
-    <div class="loading-master-canvas">
-      <div>
-        Please wait!
-      </div>
-      <div class="lds-ellipsis">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+  <div class="loading-master-canvas">
+    <div>
+      Please wait!
+    </div>
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
   </div>
-  <!-- Loading master icon ends -->
-  
-  
-  
-  <!-- nav-bar start -->
-  <div class="nav-master">
-    <div class="nav-brand">
-      3D Models Manager
-    </div>
-    <div class="user-info">
-      <div class="user-info-item">
-        <a href="/">
-          Login
-        </a>
-      </div>
+</div>
+<!-- Loading master icon ends -->
+
+
+
+<!-- nav-bar start -->
+<div class="nav-master">
+  <div class="nav-brand">
+    3D Models Manager
+  </div>
+  <div class="user-info">
+    <div class="user-info-item">
+      <a href="/">
+        Login
+      </a>
     </div>
   </div>
-  <hr class="nav-hr">
-  <!-- nav-bar ends -->
+</div>
+<hr class="nav-hr">
+<!-- nav-bar ends -->
 
 
 
-  <div class="container">
-    <div class="title-master">
-      Register User
-    </div>
-    <form class="form" [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
-      <div class="form-group">
-        <div class="form-control-master">
-          <label class="label-master">
-            Display Name
-          </label>
-          <div>
-            <input type="text" class="input-master" 
-            formControlName="displayName">
-            <div class="validation-master" *ngIf="registerForm.controls['displayName'].touched && 
+<div class="container">
+  <div class="title-master">
+    Register User
+  </div>
+  <form class="form" [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
+    <div class="form-group">
+      <div class="form-control-master">
+        <label class="label-master">
+          Display Name
+        </label>
+        <div>
+          <input type="text" class="input-master" formControlName="displayName">
+          <div class="validation-master" *ngIf="registerForm.controls['displayName'].touched && 
               registerForm.controls['displayName'].errors?.['required']">
-              <div *ngIf="registerForm.controls['displayName'].errors?.['required']">
-                Display Name is required
-              </div>
+            <div *ngIf="registerForm.controls['displayName'].errors?.['required']">
+              Display Name is required
             </div>
           </div>
         </div>
-  
-        <div class="form-control-master">
-          <label class="label-master">
-            User Name
-          </label>
-          <div>
-            <input type="text" class="input-master" 
-            formControlName="userName">
-            <div class="validation-master" *ngIf="registerForm.controls['userName'].touched && 
-            registerForm.controls['userName'].errors?.['required']">
-              <div *ngIf="registerForm.controls['userName'].errors?.['required']">
-                User Name is required
-              </div>
-            </div>
-          </div>
-          <div class="error-msg-master" *ngIf="userNameError">
-            {{userNameMsg}}
-          </div>
-        </div>
-  
-        <div class="form-control-master">
-          <label class="label-master">
-            Email
-          </label>
-          <div>
-            <input type="email" class="input-master" 
-            formControlName="email" [readonly]="OTPSent">
-            <div class="validation-master" *ngIf="registerForm.controls['email'].touched && 
-            registerForm.controls['email'].errors?.['required']">
-              <div *ngIf="registerForm.controls['email'].errors?.['required']">
-                Email is required
-              </div>
-            </div>
-            <div class="info-msg-master" *ngIf="!OTPSent">
-              Once OTP sent you can't change the email unless refreshing the page. 
-            </div>
-          </div>
-          <div class="otp-btn" *ngIf="!OTPSent">
-            <button type="button" class="btn-master btn-master-default" (click)="sendOTPEmail()" 
-            [disabled]="registerForm.controls['email'].errors?.['required']"> 
-              Send OTP to the entered email
-            </button>
-          </div>
-          <div class="info-msg-master" *ngIf="OTPSent">
-            OTP Sent to the provided email, if not found in your inbox, check your spam emails. 
-          </div>
-          <div class="error-msg-master" *ngIf="sendEmailError">
-            {{sendEmailMsg}}
-          </div>
-        </div>
-        
-        <div class="form-control-master">
-          <label class="label-master">
-            OTP
-          </label>
-          <div>
-            <input type="text" class="input-master" 
-            formControlName="OTP">
-            <div class="validation-master" *ngIf="registerForm.controls['OTP'].touched && 
-            registerForm.controls['OTP'].errors?.['required']">
-              <div *ngIf="registerForm.controls['OTP'].errors?.['required']">
-                OTP is required
-              </div>
-            </div>
-          </div>
-          <div class="error-msg-master" *ngIf="OTPError">
-            {{OTPErrorMsg}}
-          </div>
-        </div>
+      </div>
 
-        <div class="form-control-master">
-          <label class="label-master">
-            Password
-          </label>
-          <div>
-            <input type="password" class="input-master" 
-            formControlName="password">
-            <div class="validation-master" *ngIf="registerForm.controls['password'].touched && 
-            registerForm.controls['password'].errors?.['required']">
-              <div *ngIf="registerForm.controls['password'].errors?.['required']">
-                Password is required
-              </div>
+      <div class="form-control-master">
+        <label class="label-master">
+          User Name
+        </label>
+        <div>
+          <input type="text" class="input-master" formControlName="userName">
+          <div class="validation-master" *ngIf="registerForm.controls['userName'].touched && 
+            registerForm.controls['userName'].errors?.['required']">
+            <div *ngIf="registerForm.controls['userName'].errors?.['required']">
+              User Name is required
             </div>
           </div>
         </div>
-  
-        <div class="form-control-master" *ngIf="OTPSent">
-          <button type="submit" class="btn-master btn-master-default" 
-          [disabled]="registerForm.controls['displayName'].errors?.['required'] || 
+        <div class="error-msg-master" *ngIf="userNameError">
+          {{userNameMsg}}
+        </div>
+      </div>
+
+      <div class="form-control-master">
+        <label class="label-master">
+          Email
+        </label>
+        <div>
+          <input type="email" class="input-master" formControlName="email" [readonly]="OTPSent">
+          <div class="validation-master" *ngIf="registerForm.controls['email'].touched && 
+            registerForm.controls['email'].errors?.['required']">
+            <div *ngIf="registerForm.controls['email'].errors?.['required']">
+              Email is required
+            </div>
+          </div>
+          <div class="info-msg-master" *ngIf="!OTPSent">
+            Once OTP sent you can't change the email unless refreshing the page.
+          </div>
+        </div>
+        <div class="otp-btn" *ngIf="!OTPSent">
+          <button type="button" class="btn-master btn-master-default" (click)="sendOTPEmail()"
+            [disabled]="registerForm.controls['email'].errors?.['required']">
+            Send OTP to the entered email
+          </button>
+        </div>
+        <div class="info-msg-master" *ngIf="OTPSent">
+          OTP Sent to the provided email, if not found in your inbox, check your spam emails.
+        </div>
+        <div class="error-msg-master" *ngIf="sendEmailError">
+          {{sendEmailMsg}}
+        </div>
+      </div>
+
+      <div class="form-control-master">
+        <label class="label-master">
+          OTP
+        </label>
+        <div>
+          <input type="text" class="input-master" formControlName="OTP">
+          <div class="validation-master" *ngIf="registerForm.controls['OTP'].touched && 
+            registerForm.controls['OTP'].errors?.['required']">
+            <div *ngIf="registerForm.controls['OTP'].errors?.['required']">
+              OTP is required
+            </div>
+          </div>
+        </div>
+        <div class="error-msg-master" *ngIf="OTPError">
+          {{OTPErrorMsg}}
+        </div>
+      </div>
+
+      <div class="form-control-master">
+        <label class="label-master">
+          Password
+        </label>
+        <div>
+          <input type="password" class="input-master" formControlName="password">
+          <div class="validation-master" *ngIf="registerForm.controls['password'].touched && 
+            registerForm.controls['password'].errors?.['required']">
+            <div *ngIf="registerForm.controls['password'].errors?.['required']">
+              Password is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-control-master" *ngIf="OTPSent">
+        <button type="submit" class="btn-master btn-master-default" [disabled]="registerForm.controls['displayName'].errors?.['required'] || 
           registerForm.controls['userName'].errors?.['required'] ||
           registerForm.controls['email'].errors?.['required'] ||
           registerForm.controls['OTP'].errors?.['required'] ||
           registerForm.controls['password'].errors?.['required']">
-            Register
-          </button>
-        </div>
-  
+          Register
+        </button>
       </div>
-    </form>
-  </div>
+
+    </div>
+  </form>
+</div>

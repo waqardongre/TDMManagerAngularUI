@@ -28,6 +28,7 @@ export class UserRegistrationComponent implements OnInit {
   private OTP: string = '';
   protected userNameMsg: string = '';
   protected userNameError: boolean = false;
+  protected toEmail: string = '';
   
   constructor (
     private userRegisterService: UserRegisterService,
@@ -69,20 +70,21 @@ export class UserRegistrationComponent implements OnInit {
   sendOTPEmail(): void {
     const formData = new FormData();
     const email = this.registerForm.value['email']
-    const toEmailPropetName = 'toEmail';
-    formData.append(toEmailPropetName, email);
+    const toEmailPropertyName = 'toEmail';
+    formData.append(toEmailPropertyName, email);
     
     this.showLoadingIcon = true;
     this.emailService.sendOTPEmail(formData)
     .subscribe({
       next: response => {
+        this.toEmail = email;
         this.sendEmailMsg = '';
         this.OTP = response;
         this.OTPSent = true;
         this.showLoadingIcon = false;
       },
       error: err => {
-        if (err.error == 'emailexists'){
+        if (err.error == 'emailexists') {
           this.sendEmailError = true;
           this.sendEmailMsg = 'A profile with this email already exists, try another email';
           this.showLoadingIcon = false;
@@ -101,8 +103,13 @@ export class UserRegistrationComponent implements OnInit {
     if (this.OTPInput == this.OTP) {
       const formData = new FormData();
       for (const key of Object.keys(this.registerForm.value)) {
-        const value = this.registerForm.value[key];
-        formData.append(key, value);
+        if (key == 'email') {
+          formData.append(key, this.toEmail);
+        }
+        else {
+          const value = this.registerForm.value[key];
+          formData.append(key, value);
+        }
       }
       const isNotAdminPropertyName = 'isNotAdmin';
       formData.append(isNotAdminPropertyName, 'false');
