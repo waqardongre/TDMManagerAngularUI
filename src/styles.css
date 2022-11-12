@@ -92,7 +92,7 @@ input:checked + .slider-master:before {
     color: #000000;
     margin: 0;
     font-family: monospace;
-    padding: 2vmin 7vmin;
+    padding: 2vmin 4.78vmin;
     cursor: pointer;
     border-radius: 0.9vmin;
 }
@@ -339,6 +339,7 @@ hr {
 .user-profile-master {
     padding-left: 1.7vmin;
     padding-right: 1.7vmin;
+    font-size: small;
 }
 
 .user-profile-icon-master{

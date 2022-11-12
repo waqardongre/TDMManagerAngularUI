@@ -11,6 +11,7 @@
     justify-content: flex-end;
     align-items: center;
     flex-grow: 1;
+    font-size: smaller;
 }
 .user-info-item {
     padding-left: 0.7vw;
