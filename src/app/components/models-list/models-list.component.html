@@ -1,12 +1,14 @@
 <!-- Loading master icon starts -->
 <div class="loading-master-icon" *ngIf="showLoadingIcon">
   <div class="loading-master-canvas">
-    <div>
-      Please wait!
-    </div>
-    <div *ngIf="attachedModelsLength > 0">
-      Uploaded: {{ uploadCount }}/{{ attachedModelsLength }}
-    </div>
+    <strong>
+      <div>
+        Please wait!
+      </div>
+      <div *ngIf="attachedModelsLength > 0">
+        &nbsp;Uploaded: {{ uploadCount }}/{{ attachedModelsLength }}
+      </div>
+    </strong>
     <div class="lds-ellipsis">
       <div></div>
       <div></div>
