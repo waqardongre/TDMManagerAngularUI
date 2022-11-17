@@ -223,6 +223,7 @@ hr {
     position: relative;
     width: 13vmin;
     height: 10vmin;
+    padding-right: 17vmin;
 }
 .lds-ellipsis div {
     position: absolute;
