@@ -77,7 +77,7 @@ input:checked + .slider-master {
 }
 input:focus + .slider-master {
     box-shadow: 0 0 5em #f1fbf8;
-} 
+}
 input:checked + .slider-master:before {
     -webkit-transform: translateX(1.8em);
     -ms-transform: translateX(1.8em);
@@ -173,7 +173,7 @@ input:checked + .slider-master:before {
 }
 .list-master-item:hover {
     background-color: #f1fbf8;
-    color: #ffffff;
+    color: #000000;
 }
 .list-master-item-label {
     padding: 2vmin;
