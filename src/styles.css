@@ -73,7 +73,7 @@ a {
     border-radius: 50%;
 }
 input:checked + .slider-master {
-    background-color: #00cb87;
+    background-color: #7c006f;
 }
 input:focus + .slider-master {
     box-shadow: 0 0 5em #f1fbf8;
@@ -97,7 +97,7 @@ input:checked + .slider-master:before {
 }
 
 .btn-master-default {
-    background-color: #7c006f; 
+    background-color: #7c006f;
     color: rgb(255, 255, 255);
 }
 .btn-master-default:hover {
